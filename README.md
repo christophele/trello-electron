@@ -1,4 +1,4 @@
-# Trello App with Electron
+# Trello Like App with Electron
 
 ## Installation
 

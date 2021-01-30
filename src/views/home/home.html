@@ -7,46 +7,54 @@
         <link href="../../assets/styles/tailwind.css" rel="stylesheet">
         <title>Trelloctron</title>
     </head>
-    <body>
+    <body class="bg-white sans-serif">
         <main>
-            <div class="bg-blue-400 w-full h-screen">
-                <div class="flex p-2 bg-blue-500 items-center">
-                    <div class="hidden md:flex justify-start">
-                        <span class="p-1 font-bold text-white text-sm mr-2 flex">
-                            Trelloctron
-                        </span>
-                    </div>
+            <div class="w-full h-screen flex flex-col items-start">
+                <div class="hidden md:flex p-4 bg-gray-600 items-center w-full justify-between font-bold text-white text-md">
+                    <span>Trelloctron</span>
+                    <span>V1</span>
                 </div>
-                <div class="flex m-4 justify-between">
-                    <div class="flex">
-                        <button class="bg-blue-700 bg-opacity-50 hover:bg-opacity-100 text-white font-bold py-2 px-3 rounded inline-flex items-center">
-                            <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                            <span>Ajouter une liste</span>
+
+                <div class="bg-cover bg-center bg-no-repeat bg-gray-500 w-full">
+                    <div class="container mx-auto px-4 pt-4 md:pt-10 pb-40"></div>
+                </div>
+
+                <div class="container mx-auto px-4 py-4 -mt-40 items-start">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <h1 class="text-3xl text-gray-300 font-semibold flex items-center"><span>Bonjour <b>{{ username|ucfirst }}</b></span> <img src="../../assets/images/tada.png" alt="" class="w-10 h-10 ml-2"></h1>
+                            <div class="text-sm text-gray-400">{{ currentDate }}</div>
+                        </div>
+                        <div>
+                            <a href="#" class="rounded-lg px-3 py-2 font-medium inline-flex items-center text-gray-500 bg-gray-300 hover:bg-gray-100">Ajouter une liste</a>
+                        </div>
+                    </div>
+                    <div class="min-h-screen flex overflow-x-scroll w-full items-start">
+                    <div class="bg-gray-100 rounded-lg p-4 rounded max-w-sm overflow-hidden w-64 border-t-8 border-yellow-600">
+
+                        <div class="flex justify-between items-center">
+                            <p class="text-gray-700 font-semibold font-sans tracking-wide text-sm">{{column.title}}</p>
+                            <button class="hover:bg-gray-100 py-1 px-1 rounded ml-5">
+                                <svg class="fill-current w-4 h-4" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                            </button>
+                        </div>
+
+                        <div class="bg-white shadow rounded px-3 pt-3 pb-5 border border-white mt-3 cursor-move">
+                            <div class="flex justify-between">
+                                <p class="text-gray-700 font-semibold font-sans tracking-wide text-sm">{{task.title}}</p>
+                            </div>
+                            <div class="flex mt-4 justify-between items-center">
+                                <span class="text-sm text-gray-600">{{task.date}}</span>
+                            </div>
+                        </div>
+
+                        <button class="inline-flex items-center text-sm font-medium text-blue-500 hover:text-blue-600 mt-3">
+                            <svg class="fill-current w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                            <span>Ajouter une carte</span>
                         </button>
+
                     </div>
                 </div>
-                <div class="px-4 pb-8 items-start">
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-gray-300 w-64">
-                        <div class="px-4 py-2">
-                            <div class="flex justify-between items-center	">
-                                <div class="font-bold text-sm">liste numéro 1</div>
-                                <button class="hover:bg-gray-100 py-1 px-1 rounded">
-                                    <svg class="fill-current w-4 h-4" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                                </button>
-                            </div>
-                            <div class="text-sm mt-2">
-                                <div class="bg-white p-2 rounded mt-2 border-b cursor-pointer hover:bg-gray-100">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur quo quasi repudiandae unde mollitia obcaecati neque, ullam itaque, voluptates nulla cupiditate consectetur odio est nobis, possimus libero esse optio! Omnis!
-                                </div>
-                                <div class="bg-white p-2 rounded mt-2 border-b cursor-pointer hover:bg-gray-100">
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe ipsa assumenda, perferendis doloribus.
-                                </div>
-                                <button class="bg-blue-500 bg-opacity-50 hover:bg-opacity-100 text-white text-xs font-bold py-1 px-2 rounded mt-2 inline-flex items-center">
-                                    <svg class="fill-current w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                                    <span>Ajouter une carte</span>
-                                </button>
-                            </div>
-                      </div>
                 </div>
             </div>
         </main>
