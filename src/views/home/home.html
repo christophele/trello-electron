@@ -1,149 +1,131 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
-        <link href="../../assets/styles/tailwind.css" rel="stylesheet">
-        <script src="home.js"></script>
-        <title>Trelloctron</title>
-    </head>
-    <body class="bg-white sans-serif">
-        <main>
-            <div class="w-full h-screen flex flex-col items-start">
-                <div class="hidden md:flex p-4 bg-gray-600 items-center w-full justify-between font-bold text-white text-md">
-                    <span>Trelloctron</span>
-                    <span>V1</span>
-                </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
+    <link href="../../assets/styles/tailwind.css" rel="stylesheet">
+    <title>Trelloctron</title>
+</head>
+<body class="bg-white sans-serif">
 
-                <div class="bg-cover bg-center bg-no-repeat bg-gray-500 w-full">
-                    <div class="container mx-auto px-4 pt-4 md:pt-10 pb-40"></div>
-                </div>
+<div data-modal="addList" class="modal hidden fixed w-full h-full top-0 left-0 flex items-center justify-center">
+    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+        <div class="modal-content py-4 text-left px-6">
+            <div class="flex items-center pb-3">
+                <p class="text-2xl font-bold">Ajout d'une liste</p>
+            </div>
+            <div class="flex relative">
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                       type="text" placeholder="Nom de la liste" data-input="list-name">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                        data-button="addList">Ajouter
+                </button>
+                <button class="cursor-pointer z-50 absolute right-0 bottom-16" data-modal-close>
+                    <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                         viewBox="0 0 18 18">
+                        <path class=""
+                              d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <div class="container mx-auto px-4 py-4 -mt-40 items-start">
-                    <div class="flex justify-between items-center mb-8">
-                        <div>
-                            <h1 class="text-3xl text-gray-300 font-semibold flex items-center"><span>Bonjour <b>{{ username|ucfirst }}</b></span> <img src="../../assets/images/tada.png" alt="" class="w-10 h-10 ml-2"></h1>
-                            <div class="text-sm text-gray-400">{{ currentDate }}</div>
-                        </div>
-                        <div>
-                            <a
-                                class="addList modal-open rounded-lg px-3 py-2 font-medium inline-flex items-center text-gray-500 bg-gray-300 hover:bg-gray-100"
-                                data-modal="addListModal"
-                            >
-                                Ajouter une liste
-                            </a>
-                            <div id="addListModal" class="modal hidden fixed w-full h-full top-0 left-0 flex items-center justify-center">
-                                <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-                                    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-                                    <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
-                                        <svg class="modal-close fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                                        <path class="modal-close" d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="modal-content py-4 text-left px-6">
-                                        <div class="flex items-center pb-3">
-                                            <p class="text-2xl font-bold">Ajout d'une liste</p>
-                                        </div>
-                                        <div class="flex relative">
-                                            <input
-                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="newListInput"
-                                                type="text"
-                                                placeholder="Nom de la liste"
-                                            >
-                                            <button id="addList" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
-                                                Ajouter
-                                            </button>
-                                            <div class="modal-close cursor-pointer z-50 absolute right-0 bottom-16">
-                                                <svg class="modal-close fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                                                    <path class="modal-close" d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="allLists" class="min-h-screen flex overflow-x-scroll w-full items-start">
-                        <div class="bg-gray-100 rounded-lg p-4 rounded max-w-sm overflow-hidden w-64 border-t-8 border-yellow-600 mr-4">
-                            <div class="flex justify-between items-center">
-                                <p class="text-gray-700 font-semibold font-sans tracking-wide text-sm">{{column.title}}</p>
-                                <button class="hover:bg-gray-100 py-1 px-1 rounded ml-5">
-                                    <svg
-                                        class="fill-current w-4 h-4"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="bg-white shadow rounded px-3 pt-3 pb-5 border border-white mt-3 cursor-move">
-                                <div class="flex justify-between">
-                                    <p class="text-gray-700 font-semibold font-sans tracking-wide text-sm">{{task.title}}</p>
-                                </div>
-                                <div class="flex mt-4 justify-between items-center">
-                                    <span class="text-sm text-gray-600">{{task.date}}</span>
-                                </div>
-                            </div>
-                            <a
-                                class="addTask modal-open inline-flex items-center text-sm font-medium text-blue-500 hover:text-blue-600 mt-3"
-                                data-modal="addTaskModal"
-                            >
-                                <svg class="fill-current w-4 h-4 mr-1"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                                </svg>
-                                Ajouter une tâche
-                            </a>
-                            <div id="addTaskModal" class="modal hidden fixed w-full h-full top-0 left-0 flex items-center justify-center">
-                                <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-                                <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-                                    <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
-                                        <svg
-                                            class="modal-close fill-current text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 18 18"
-                                        >
-                                            <path
-                                                class="modal-close"
-                                                d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <div class="modal-content py-4 text-left px-6">
-                                        <div class="flex justify-between items-center pb-3">
-                                            <p class="text-2xl font-bold">Ajout d'une tâche</p>
-                                        </div>
-                                        <div class="flex relative">
-                                            <input
-                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="newTaskTitle"
-                                                type="text"
-                                                placeholder="Titre"
-                                            >
-                                            <button id="addTask" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
-                                                Ajouter
-                                            </button>
-                                            <div class="modal-close cursor-pointer z-50 absolute right-0 bottom-16">
-                                                <svg class="modal-close fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                                                    <path class="modal-close" d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div data-modal="addTask" class="modal hidden fixed w-full h-full top-0 left-0 flex items-center justify-center">
+    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+        <button data-modal-close
+                class="absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+            <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+            </svg>
+        </button>
+        <div class="modal-content py-4 text-left px-6">
+            <div class="flex justify-between items-center pb-3">
+                <p class="text-2xl font-bold">Ajout d'une tâche</p>
+            </div>
+            <div class="flex relative">
+                <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text" placeholder="Titre" data-input="task-name"
+                >
+                <button id="addTask" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2" data-button="addTask">
+                    Ajouter
+                </button>
+                <div class="cursor-pointer z-50 absolute right-0 bottom-16">
+                    <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                         viewBox="0 0 18 18">
+                        <path class=""
+                              d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                    </svg>
                 </div>
             </div>
-        </main>
-    </body>
+        </div>
+    </div>
+</div>
+
+<main>
+    <div class="w-full h-screen flex flex-col items-start">
+        <div class="hidden md:flex p-4 bg-gray-600 items-center w-full justify-between font-bold text-white text-md">
+            <span>Trelloctron</span>
+            <span>V1</span>
+        </div>
+
+        <div class="bg-cover bg-center bg-no-repeat bg-gray-500 w-full">
+            <div class="container mx-auto px-4 pt-4 md:pt-10 pb-40"></div>
+        </div>
+
+        <div class="container mx-auto px-4 py-4 -mt-40 items-start">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-3xl text-gray-300 font-semibold flex items-center"><span>Bonjour <b
+                            data-div="currentName">{{ username }}</b></span> <img
+                            src="../../assets/images/tada.png" alt="" class="w-10 h-10 ml-2"></h1>
+                    <div class="text-sm text-gray-400" data-div="currentDate"></div>
+                </div>
+                <div>
+                    <a class="rounded-lg px-3 py-2 font-medium inline-flex items-center cursor-pointer text-gray-500 bg-gray-300 hover:bg-gray-100"
+                        data-open="addList">Ajouter une liste
+                    </a>
+                </div>
+            </div>
+            <div data-list-container class="min-h-screen flex overflow-x-scroll w-full items-start"></div>
+        </div>
+    </div>
+</main>
+
+<div class="bg-gray-100 rounded-lg p-4 rounded max-w-sm overflow-hidden w-64 border-t-8 border-yellow-600 mr-4" data-template="list" data-list="">
+    <div class="flex justify-between items-center">
+        <p class="text-gray-700 font-semibold font-sans tracking-wide text-sm hover:underline cursor-pointer" data-div="column-title">{{column.title}}</p>
+        <button class="hover:bg-gray-100 py-1 px-1 rounded ml-5" data-button="removeList">
+            <svg class="fill-current w-4 h-4" viewBox="0 0 24 24">
+                <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+            </svg>
+        </button>
+    </div>
+    <div data-task-container></div>
+    <a class="inline-flex items-center text-sm font-medium text-blue-500 hover:text-blue-600 mt-3 cursor-pointer" data-open="addTask">
+        <svg class="fill-current w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+        Ajouter une tâche
+    </a>
+</div>
+
+<div class="bg-white shadow rounded px-3 pt-3 pb-5 border border-white mt-3 cursor-move" data-template="card" draggable="true" data-task="">
+    <div class="flex justify-between">
+        <p class="text-gray-700 font-semibold font-sans tracking-wide text-sm cursor-pointer hover:underline" data-div="task-title">{{task.title}}</p>
+    </div>
+    <div class="flex mt-4 justify-between items-center">
+        <span class="text-sm text-gray-600" data-div="task-date">{{task.date}}</span>
+    </div>
+</div>
+
+<script src="trello.js"></script>
+<script src="home.js"></script>
+</body>
 </html>
