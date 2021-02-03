@@ -1,4 +1,33 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, Menu} = require('electron');
+
+const menuTemplate = [
+    {
+        label: 'Gestion',
+        submenu: [
+            {
+                label: 'Ajouter une liste',
+                click: ''
+            },
+            {
+                label: 'Supprimer toutes les listes !',
+                click: ''
+            }
+        ]
+    },
+    {
+        label: 'Sauvegarde',
+        submenu: [
+            {
+                label: 'Import',
+                click: ''
+            },
+            {
+                label: 'Export',
+                click: ''
+            }
+        ]
+    }
+];
 
 function createWindow() {
     let win = new BrowserWindow({
@@ -11,6 +40,8 @@ function createWindow() {
 
     win.loadFile('src/views/home/home.html');
     win.once('ready-to-show', () => {
+        const menu = Menu.buildFromTemplate(menuTemplate);
+        Menu.setApplicationMenu(menu);
         win.show();
     });
     

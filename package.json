@@ -9,7 +9,8 @@
   "author": "Christophe LE",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^11.2.1"
+    "electron": "^11.2.2",
+    "electronmon": "^1.1.2"
   },
   "dependencies": {
     "tailwindcss": "^2.0.2"
