@@ -1,4 +1,8 @@
 function formatDate(d) {
+    if (!(d instanceof Date)) {
+        d = new Date(d);
+    }
+
     let month = '' + (d.getMonth() + 1);
     let day = '' + d.getDate();
     let year = d.getFullYear();
@@ -20,9 +24,9 @@ window.trello_init = function (data, functions) {
     let cardTemplate = null;
     let dragged = null;
 
-    let addList = (title, id = null) => {
+    this.addList = (title, id = null, dateCreate = null) => {
 
-        let date = new Date();
+        let date = dateCreate ? dateCreate : new Date();
         id = id === null ? date.getTime().toFixed() : id;
 
         let listContainer = document.querySelector('[data-list-container]');
@@ -58,8 +62,8 @@ window.trello_init = function (data, functions) {
         }).catch(() => alert('Erreur lors de l\'ajout de la liste'));
     }
 
-    let addTask = (list, content, id = null) => {
-        let date = new Date();
+    this.addTask = (list, content, id = null, dateCreate = null) => {
+        let date = dateCreate ? dateCreate : new Date();
         id = id === null ? date.getTime().toFixed() : id;
 
         let taskContainer = document.querySelector(`[data-list="${list}"] [data-task-container]`);
@@ -92,7 +96,10 @@ window.trello_init = function (data, functions) {
             taskContainer.appendChild(newTask);
 
             return id;
-        }).catch(() => alert('Erreur lors de l\'ajout de la tache'));
+        }).catch((err) => {
+            console.log(err)
+            alert('Erreur lors de l\'ajout de la tache')
+        });
     }
 
     let initDrag = () => {
@@ -233,7 +240,7 @@ window.trello_init = function (data, functions) {
 
         let listInput = document.querySelector('[data-input="list-name"]');
         document.querySelector('[data-button="addList"]').addEventListener('click', function () {
-            addList(listInput.value).then(() => {
+            window.trello.addList(listInput.value).then(() => {
                 this.parentElement.parentElement.parentElement.parentElement.classList.add('hidden');
                 listInput.value = '';
             });
@@ -241,7 +248,7 @@ window.trello_init = function (data, functions) {
 
         let taskInput = document.querySelector('[data-input="task-name"]');
         document.querySelector('[data-button="addTask"]').addEventListener('click', function () {
-            addTask(currentList, taskInput.value).then(() => {
+            window.trello.addTask(currentList, taskInput.value).then(() => {
                 this.parentElement.parentElement.parentElement.parentElement.classList.add('hidden');
                 taskInput.value = '';
             });
@@ -253,12 +260,5 @@ window.trello_init = function (data, functions) {
     initListTemplate()
     initCardTemplate()
     initModals()
-    initHeader();
     initDrag();
-
-    if (Object.keys(data).length === 0) {
-        addList('Liste 1').then((id) => {
-            addTask(id, 'Tache 1');
-        })
-    }
 }
