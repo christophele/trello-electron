@@ -1,4 +1,4 @@
-const {app, BrowserWindow, Menu, dialog, ipcMain, remote} = require('electron');
+const {app, BrowserWindow, Menu, dialog, ipcMain} = require('electron');
 const fs = require('fs');
 
 const dataFileName = 'save-data-trello.json';
@@ -36,7 +36,7 @@ function createWindow() {
         Menu.setApplicationMenu(menu);
         win.show();
     });
-    
+
     win.on('closed', () => {
         win = null;
     });
@@ -45,12 +45,26 @@ function createWindow() {
 }
 
 function readData() {
-    let data = fs.readFileSync(dataFileName, 'utf-8');
-    return data ? JSON.parse(data) : {};
+    return new Promise((resolve, reject) => {
+        fs.access(dataFileName, fs.constants.F_OK, error => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            fs.readFile(dataFileName, 'utf-8', (error, data) => {
+                if (error) {
+                    reject(error);
+                }
+
+                resolve(data ? JSON.parse(data) : {});
+            });
+        });
+    });
 }
 
-function saveData(data) {
-    fs.writeFile(dataFileName, JSON.stringify(data), 'utf-8', (error) => {
+async function saveData(data) {
+    await fs.writeFile(dataFileName, JSON.stringify(data), 'utf-8', (error) => {
         if (error) {
             console.log(error);
         }
@@ -58,7 +72,11 @@ function saveData(data) {
 }
 
 function loadData(window) {
-    window.webContents.send('load-data', readData());
+    readData().then(data => {
+        window.webContents.send('load-data', data);
+    }).catch(error => {
+        console.log(error);
+    });
 }
 
 function importDataFile(window) {
@@ -107,12 +125,18 @@ function exportDataFile(window) {
             return;
         }
 
-        fs.writeFile(file.filePath.toString(), JSON.stringify(readData()), 'utf-8', (error) => {
-            if (error) {
-                dialog.showErrorBox('Echec de l\'export du fichier',
-                'Une erreur est survenue lors de l\'export du fichier.');
-                console.log(error);
-            }
+        readData().then(data => {
+            fs.writeFile(file.filePath.toString(), JSON.stringify(data), 'utf-8', (error) => {
+                if (error) {
+                    dialog.showErrorBox('Echec de l\'export du fichier',
+                    'Une erreur est survenue lors de l\'export du fichier.');
+                    console.log(error);
+                }
+            });
+        }).catch(error => {
+            dialog.showErrorBox('Echec de l\'export du fichier',
+            'Une erreur est survenue lors de l\'export du fichier.');
+            console.log(error);
         });
     }).catch(error => {
         dialog.showErrorBox('Echec de l\'export du fichier',
@@ -122,7 +146,11 @@ function exportDataFile(window) {
 }
 
 ipcMain.on('get-data', (event) => {
-    event.reply('load-data', readData());
+    readData().then(data => {
+        event.reply('load-data', data);
+    }).catch(error => {
+        console.log(error);
+    });
 });
 
 ipcMain.on('save-data', (event, data) => {
